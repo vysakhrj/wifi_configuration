@@ -166,8 +166,6 @@ public final class WifiUtils implements WifiConnectorBuilder,
                 successListener.isSuccessful(false);
                 Log.e("wifi_configuration", "not connected successfully");
                 wifiLog("DIDN'T CONNECT TO WIFI");
-                Intent panelIntent = new Intent(Settings.Panel.ACTION_WIFI);
-                startActivityForResult(panelIntent);
             });
         }
     };
@@ -212,6 +210,8 @@ public final class WifiUtils implements WifiConnectorBuilder,
                 of(mConnectionWpsListener).ifPresent(wpsListener -> wpsListener.isSuccessful(false));
                 mWifiConnectionCallback.errorConnect();
                 wifiLog("COULDN'T ENABLE WIFI");
+                Intent panelIntent = new Intent(Settings.Panel.ACTION_WIFI);
+                startActivityForResult(panelIntent);
             }
         }
     }
