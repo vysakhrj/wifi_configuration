@@ -130,7 +130,7 @@ public final class WifiUtils implements WifiConnectorBuilder,
                                 .setSsid("${mSsid}")
                                 .setWpa2Passphrase("${mPassword}")
 //                                 .setIsAppInteractionRequired() // Optional (Needs location permission)
-                                .build()
+                                .build();
                              val status = wifiManager.addNetworkSuggestions(listOf(suggestion));
                                 if (status != WifiManager.STATUS_NETWORK_SUGGESTIONS_SUCCESS) {
                                     // do error handling here
