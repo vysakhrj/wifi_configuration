@@ -210,6 +210,7 @@ public final class WifiUtils implements WifiConnectorBuilder,
                 of(mConnectionWpsListener).ifPresent(wpsListener -> wpsListener.isSuccessful(false));
                 mWifiConnectionCallback.errorConnect();
                 wifiLog("COULDN'T ENABLE WIFI");
+                    
             }
         }
     }
