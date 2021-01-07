@@ -125,13 +125,28 @@ public final class WifiUtils implements WifiConnectorBuilder,
                     mSingleScanResult = matchScanResultSsid(mSsid, scanResultList);
             }
             if (mSingleScanResult != null && mPassword != null) {
-                if (connectToWifi(mContext, mWifiManager, mSingleScanResult, mPassword)) {
-                    registerReceiver(mContext, mWifiConnectionReceiver.activateTimeoutHandler(mSingleScanResult),
-                            new IntentFilter(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION));
-                    registerReceiver(mContext, mWifiConnectionReceiver,
-                            new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION));
-                } else
-                    mWifiConnectionCallback.errorConnect();
+                    if(true){
+                            val suggestion = WifiNetworkSuggestion.Builder()
+                                .setSsid("${mSsid}")
+                                .setWpa2Passphrase("${mPassword}")
+//                                 .setIsAppInteractionRequired() // Optional (Needs location permission)
+                                .build()
+                             val status = wifiManager.addNetworkSuggestions(listOf(suggestion));
+                                if (status != WifiManager.STATUS_NETWORK_SUGGESTIONS_SUCCESS) {
+                                    // do error handling here
+                                         wifiLog("Connectiion Success");
+                                }
+                    }
+                    else{
+                        if (connectToWifi(mContext, mWifiManager, mSingleScanResult, mPassword)) {
+                            registerReceiver(mContext, mWifiConnectionReceiver.activateTimeoutHandler(mSingleScanResult),
+                                    new IntentFilter(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION));
+                            registerReceiver(mContext, mWifiConnectionReceiver,
+                                    new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION));
+                        } else {
+                            mWifiConnectionCallback.errorConnect();
+                        }
+                    }
             } else
                 mWifiConnectionCallback.errorConnect();
         }
